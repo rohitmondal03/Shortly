@@ -5,6 +5,7 @@ This project called `Shorlty`,  is a static web app, which can shorten the link 
 2. Vite
 3. Tailwind CSS
 4. Material UI
+5. Radix UI
 
 ### API
 https://api.shrtco.de/v2/shorten?url=example.org/very/long/link.html
@@ -12,3 +13,4 @@ https://api.shrtco.de/v2/shorten?url=example.org/very/long/link.html
 
 
 ### Website Link
+https://url-shortener-xi-eight.vercel.app

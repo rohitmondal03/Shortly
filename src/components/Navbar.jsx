@@ -5,7 +5,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 const styles = {
   navList: `mx-10 cursor-pointer hover:text-zinc-800 transition`,
   loginBtn: `mr-10 text-zinc-500 transition hover:text-slate-800`,
-  signupBtn: `ml-10 text-zinc-900 border-2 px-6 py-3 rounded-3xl bg-teal-400 transition hover:bg-teal-300`,
+  signupBtn: `ml-10 text-zinc-700 border-2 px-6 py-3 rounded-3xl bg-teal-400 transition hover:bg-teal-300`,
 }
 
 

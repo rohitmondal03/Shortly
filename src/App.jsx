@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import './App.css'
 
 // COMPONENTS
@@ -7,7 +7,9 @@ import Footer from "./components/Footer";
 
 // ASSETS
 import main_img from "./assets/main-img.png"
-import React from 'react';
+
+
+// STYLES OBJECTS
 
 const styles = {
   home: `py-10 px-20`,
@@ -15,7 +17,7 @@ const styles = {
   homeBottom: `border-4 border-zinc-300 py-7 px-10 w-full mx-auto rounded-2xl bg-violet-800`,
 }
 
-const statsSecStyles= {
+const statsSecStyles = {
   stats: `bg-zinc-300 bg-white py-40 px-20 text-center`,
   statsDetails: `flex flex-row wrap items-center justify-evenly font-bold mt-32`,
   statsDetailBox: `bg-white mx-10 py-12 px-7 rounded-lg`,
@@ -23,7 +25,7 @@ const statsSecStyles= {
   detailsText: `text-zinc-400`,
 }
 
-const smallSecStyles= {
+const smallSecStyles = {
   main: `small_sec text-white text-center font-bold p-20`,
   head: `text-5xl`,
   btn: `bg-sky-400 text-xl mt-10 py-4 px-10 rounded-full transition duration-300 hover:scale-105 active:scale-90`
@@ -32,6 +34,40 @@ const smallSecStyles= {
 
 
 function App() {
+
+  // const [fetchedData, setFetchedData] = useState(null)
+  const [linksArr, setLinksArr] = useState([])
+
+  const inputRef = useRef();
+
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    let inputValue = inputRef.current.value;
+
+
+    if (inputValue === "") {
+      alert("Please enter a valid URL")
+      inputRef.current.value = "";
+    }
+    else {
+      try {
+        const apiUrl = `https://api.shrtco.de/v2/shorten?url=` + inputValue;
+        const getData = await fetch(apiUrl);
+        const jsonData = await getData.json();
+        setLinksArr([...linksArr, jsonData])
+        inputRef.current.value = "";
+      }
+      catch (error) {
+        console.log("Error is: ", error);
+        alert('Some error occured !!')
+      }
+    }
+  }
+
+
+
+
   return (
     <>
 
@@ -62,20 +98,51 @@ function App() {
         </div>
 
         <div className={styles.homeBottom}>
-          <form className='mx-auto flex items-center justify-between'>
+          <form
+            className='mx-auto flex items-center justify-between'
+            onSubmit={handleSubmit}
+          >
             <input
               type='text'
               placeholder='Enter your link'
               className='text-left mr-5 w-full py-3 px-5 border-4 rounded-xl'
+              ref={inputRef}
             />
 
             <button
               type='submit'
-              className='font-bold border-2 w-40 border-transparent py-3 rounded-lg bg-teal-500 text-white'
+              className='font-bold border-2 w-40 border-transparent py-3 rounded-lg bg-teal-500 text-white transition hover:bg-blue-400 hover:scale-105 active:scale-95'
             >
               Shorten it
             </button>
           </form>
+
+          {(linksArr.length != 0) &&
+            <div
+              className='text-white text-center my-12'
+            >
+              <h1 className='text-5xl my-12 font-bold'>Your Links</h1>
+              {/* {fetchedData} */}
+              {linksArr.map(elements => (
+                <div className='my-8'>
+                  <p
+                    className='text-2xl font-bold text-slate-200'
+                  >
+                  {elements.result.original_link.substring(7).replace(/^\w/, (c) => c.toUpperCase())}
+                  </p>
+
+                  <p
+                    className='underline text-red-400 text-xl cursor-pointer transition hover:text-amber-400'
+                    onClick={() => {
+                      window.open(elements.result.original_link)
+                    }}
+                  >
+                    {elements.result.short_link2}
+                  </p>
+                </div>
+              ))}
+            </div>
+          }
         </div>
       </div>
 
@@ -100,7 +167,7 @@ function App() {
 
           <div className={statsSecStyles.statsDetailBox}>
             <img />
-            <h1 className={styles.detailsHeading}>Detailed Records</h1>
+            <h1 className={statsSecStyles.detailsHeading}>Detailed Records</h1>
             <p className={statsSecStyles.detailsText}>Gain insights into who is clicking your links. Knowing when and where people engage with your content helps inform better decisions.</p>
           </div>
 
@@ -135,6 +202,3 @@ function App() {
 }
 
 export default App
-
-
-// https://shrtco.de/docs

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, {useState, useRef } from 'react';
 import './App.css'
 
 // COMPONENTS
@@ -55,6 +55,7 @@ function App() {
         const apiUrl = `https://api.shrtco.de/v2/shorten?url=` + inputValue;
         const getData = await fetch(apiUrl);
         const jsonData = await getData.json();
+        console.log(jsonData.result.original_link);
         setLinksArr([...linksArr, jsonData])
         inputRef.current.value = "";
       }
@@ -124,13 +125,15 @@ function App() {
               <h1 className='text-5xl my-12 font-bold'>Your Links</h1>
               {/* {fetchedData} */}
               {linksArr.map(elements => (
-                <div className='my-8'>
+                <div 
+                  key={elements.result.short_link2}
+                  className='my-8'
+                >
                   <p
-                    className='text-2xl font-bold text-slate-200'
+                    className='text-2xl transition'
                   >
-                  {elements.result.original_link.substring(7).replace(/^\w/, (c) => c.toUpperCase())}
+                    {elements.result.original_link}
                   </p>
-
                   <p
                     className='underline text-red-400 text-xl cursor-pointer transition hover:text-amber-400'
                     onClick={() => {

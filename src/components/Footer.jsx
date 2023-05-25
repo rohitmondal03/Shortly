@@ -1,5 +1,8 @@
 import React from 'react'
 
+// COMPONENTS
+import SocialLinks from "./SocialLinks";
+
 // STYLES OBJECT
 
 const footerStyles = {
@@ -48,12 +51,9 @@ const Footer = () => {
       </div>
 
       <div className={footerStyles.socialLink}>
-        <img />
-        <img />
-        <img />
+        <SocialLinks />
       </div>
 
-      <div></div>
     </footer>
   )
 }

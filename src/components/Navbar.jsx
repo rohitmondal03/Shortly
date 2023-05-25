@@ -25,9 +25,7 @@ const Navbar = () => {
 
         <div className='nav_right text-xl font-semibold'>
           <button className={styles.loginBtn}>Login</button>
-
           <button className={styles.signupBtn}>Sign Up</button>
-
           <div className='hidden'>
             <MenuIcon />
           </div>

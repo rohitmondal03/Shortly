@@ -1,0 +1,21 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+.small_sec {
+  background-image: url('./assets/blob-scene-haikei.svg');
+}
+
+
+/* FOOTER */
+
+.footer_list_items li {
+  margin-bottom: .25rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.footer_list_items li:hover {
+  color: #ffc5c5;
+}
